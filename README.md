@@ -17,7 +17,12 @@ react-native link react-native-webview
 ```
 ## 运行
 
-安装完成之后，执行以下命令启动项目：
+安装完成之后，启动模拟器
+```
+react-native run-ios
+```
+
+执行以下命令启动项目：
 ```
 npm start
 ```
