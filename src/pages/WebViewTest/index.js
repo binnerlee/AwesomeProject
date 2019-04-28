@@ -7,7 +7,7 @@ export default class WebViewScreen extends React.Component {
     constructor() {
         super();
         this.state = {
-            url: 'https://m.baidu.com'
+            url: 'http://10.70.141.64:8001/'
         }
     }
 
@@ -49,16 +49,31 @@ export default class WebViewScreen extends React.Component {
      * @returns {Boolean} true:正常请求，false:拒绝请求
      */
     wvShouldStartLoadWithRequest = (e) => {
-        console.log('wvShouldStartLoadWithRequest', e.url);
-
-        return e.url.indexOf('baidu.com') > -1;
+        // console.log('wvShouldStartLoadWithRequest', e.url);
+        // if(e.url.indexOf('baidu.com') > -1) {
+        //     return true;
+        // }
+        // console.log('这里有内容的哟');
+        // return false;
+        return true;
     }
     wvLoadStart = (e) => {
-        e.cancelable = true;
         console.log('wvLoadStart',e);
-        e.preventDefault();
-        e.stopPropagation();
-        return false;
+    }
+    wxLoad = (e) => {
+        console.log('wxLoad', e);
+    }
+    wxLoadEnd = (e) => {
+        console.log('wxLoadEnd', e);
+    }
+    wxError = (e) => {
+        console.log('wxError', e);
+    }
+    wxMessage = (e) => {
+        console.log('wxMessage', e);
+    }
+    wxRenderError = (e) => {
+        console.log('wxRenderError', e);
     }
 
     render() {
@@ -67,10 +82,17 @@ export default class WebViewScreen extends React.Component {
                 <TextInput style={styles.txtUrl} autoComplete="off" autoCapitalize="none" placeholder="请输入地址" onChangeText={(text) => { this.setState({ text });}} onSubmitEditing={this.txtSubmitEditing} value={this.state.text} />
                 <View style={styles.webView}>
                     <WebView
+                        onRef={(ref) => { this.webViewRef = ref; }}
                         source={{ uri: this.state.url }}
                         onLoadStart={this.wvLoadStart}
                         onNavigationStateChange={this.wvNavigationStateChange}
                         onShouldStartLoadWithRequest={this.wvShouldStartLoadWithRequest}
+                        onLoadEnd={this.wxLoadEnd}
+                        onError={this.wxError}
+                        onLoad={this.wxLoad}
+                        onMessage={this.wxMessage}
+                        injectedJavaScript={`console.log('aaa');`}
+                        renderError={this.wxRenderError}
                     />
                 </View>
             </View>
