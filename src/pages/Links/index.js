@@ -109,7 +109,7 @@ export default class LinksScreen extends React.Component {
                     onMessage={this._onMessage}
                     onShouldStartLoadWithRequest={this.wvShouldStartLoadWithRequest}
                     injectedJavaScript={`console.log('aaa');`}
-                    source={{uri:'http://10.70.141.64:8001/wv'}}
+                    source={{uri:'http://10.70.136.213:8001/wv'}}
                 />
             </View>
         )

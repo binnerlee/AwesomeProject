@@ -7,7 +7,7 @@ export default class WebViewScreen extends React.Component {
     constructor() {
         super();
         this.state = {
-            url: 'http://10.70.141.64:8001/'
+            url: 'http://10.70.136.213:8001/'
         }
     }
 

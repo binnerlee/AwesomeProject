@@ -73,12 +73,24 @@ export default class SettingsScreen extends React.Component {
     handleChange = (value) => {
         this.setState({ value })
     }
+
+    receiveMessage = async (params) => {
+
+        let result = await MsgModel.receiveMessage(params);
+
+        MsgModel.responseMessage(this.webview, {...params, data:'收到你的消息咯。'});
+
+        this.setState({
+            status: result
+        });
+    }
+
     /**
      * @description 拦截url请求事件
      * @param {Object} e
      * @returns {Boolean} true:正常请求，false:拒绝请求
      */
-    wvShouldStartLoadWithRequest = async (e) => {
+    wvShouldStartLoadWithRequest = (e) => {
         if(e.url.indexOf('jsbridgeuxinh5://') !== 0) {
             return true;
         }
@@ -88,13 +100,8 @@ export default class SettingsScreen extends React.Component {
         switch(scheme) {
             case SCHEME.SEND_MESSAGE:
 
-                let result = await MsgModel.receiveMessage(params);
+            this.receiveMessage(params);
 
-                MsgModel.responseMessage(this.webview, {...params, data:'收到你的消息咯。'});
-
-                this.setState({
-                    status: result
-                });
             break;
         }
 
@@ -114,7 +121,7 @@ export default class SettingsScreen extends React.Component {
                     onMessage={this.handleMessage}
                     onShouldStartLoadWithRequest={this.wvShouldStartLoadWithRequest}
                     injectedJavaScript={`console.log('aaa');`}
-                    source={{uri:'http://10.70.141.64:8001/wv'}}
+                    source={{uri:'http://10.70.136.213:8001/wv'}}
                 />
             </View>
         )
